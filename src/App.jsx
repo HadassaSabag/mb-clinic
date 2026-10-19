@@ -1,122 +1,99 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+import bgImage from '../src/assets/'
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState('home');
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="min-h-screen bg-gray-50 font-sans" dir="rtl">
+      {/* סרגל ניווט עליון (Navbar) */}
+      <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-6 bg-transparent">
+        {/* לוגו או שם הקליניקה */}
+        <div className="text-2xl font-bold tracking-wide text-gray-800 drop-shadow-sm">
+          MB קליניק <span className="block text-xs font-normal text-gray-600">הדרך שלך לעצמך</span>
         </div>
+
+        {/* לשוניות ניווט */}
+        <nav className="hidden md:flex items-center gap-8 text-gray-800 font-medium bg-white/60 backdrop-blur-md px-6 py-2.5 rounded-full shadow-sm">
+          <button 
+            onClick={() => setActiveTab('home')} 
+            className="hover:text-pink-600 transition"
+          >
+            דף הבית
+          </button>
+          <button 
+            onClick={() => setActiveTab('about')} 
+            className="hover:text-pink-600 transition"
+          >
+            מי אנחנו
+          </button>
+          <button 
+            onClick={() => setActiveTab('nlp')} 
+            className="hover:text-pink-600 transition"
+          >
+            מה זה NLP?
+          </button>
+          <button 
+            onClick={() => setActiveTab('treatments')} 
+            className="hover:text-pink-600 transition"
+          >
+            אופני טיפול
+          </button>
+          <button 
+            onClick={() => setActiveTab('contact')} 
+            className="hover:text-pink-600 transition"
+          >
+            יצירת קשר
+          </button>
+        </nav>
+
+        {/* כפתור פעולה מהיר (CTA) */}
         <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
+          <a 
+            href="#contact" 
+            className="bg-gradient-to-r from-pink-600 to-purple-700 text-white px-5 py-2.5 rounded-full shadow-md hover:opacity-90 transition font-medium text-sm"
+          >
+            תיאום שיחת התייעצות
+          </a>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+      </header>
+
+      {/* אזור ה-Hero המרכזי עם תמונת הרקע */}
+      <section className="relative h-screen flex items-center justify-center text-center px-4">
+        {/* תמונת הרקע */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center z-0"
+          style={{ backgroundImage: `url(${bgImage})` }}
         >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+          {/* שכבת הצללה (Overlay) כדי שהטקסט יבלוט */}
+          <div className="absolute inset-0 bg-white/40 backdrop-blur-[2px]"></div>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
+
+        {/* תוכן ה-Hero */}
+        <div className="relative z-10 max-w-3xl mx-auto space-y-6">
+          <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight drop-shadow-sm">
+            מרגישים שיש בכם הרבה מעבר למה שאתם מצליחים להוציא?
+          </h1>
+          <p className="text-lg md:text-xl text-gray-700 font-medium max-w-2xl mx-auto">
+            זוג מטפלים מנוסה ינחה אתכם בקליניקה נעימה ופרטית לתהליך בו תראו כי מציאות חייכם עולה על כל דמיון.
+          </p>
+          <div className="flex justify-center gap-4 pt-4">
+            <a 
+              href="#contact" 
+              className="bg-pink-600 text-white px-8 py-3.5 rounded-full shadow-lg hover:bg-pink-700 transition font-semibold text-lg"
+            >
+              בואו נדבר
+            </a>
+            <a 
+              href="#nlp" 
+              className="bg-white/80 backdrop-blur-sm text-gray-800 border border-gray-300 px-8 py-3.5 rounded-full shadow-sm hover:bg-white transition font-semibold text-lg"
+            >
+              לקרוא על NLP
+            </a>
+          </div>
         </div>
       </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+    </div>
+  );
 }
-
-export default App
