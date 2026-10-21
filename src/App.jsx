@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import logo from './assets/logo without.png';
+import pagesBackground from './assets/pages-bg.png';
 import CoupleTherapy from './components/CoupleTherapy';
 import ParentingGuidance from './components/ParentingGuidance';
 import AboutUs from './components/AboutUs';
@@ -10,7 +11,19 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('home');
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] font-['Assistant',sans-serif] text-slate-800" dir="rtl">
+    <div
+      className={`min-h-screen bg-[#FDFBF7] font-['Assistant',sans-serif] text-slate-800 ${
+        activeTab !== 'home' ? 'bg-cover bg-center bg-fixed bg-no-repeat' : ''
+      }`}
+      dir="rtl"
+      style={
+        activeTab !== 'home'
+          ? {
+              backgroundImage: `linear-gradient(rgba(253, 251, 247, 0.78), rgba(253, 251, 247, 0.78)), url(${pagesBackground})`,
+            }
+          : undefined
+      }
+    >
       {/* ייבוא פונט Assistant מ-Google Fonts */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&display=swap');
@@ -102,10 +115,14 @@ export default function App() {
         </section>
       )}
 
-      {activeTab === 'couple' && <CoupleTherapy />}
-      {activeTab === 'parenting' && <ParentingGuidance />}
-      {activeTab === 'about' && <AboutUs />}
-      {activeTab === 'contact' && <ContactUs />}
+      {activeTab !== 'home' && (
+        <div className="mx-auto min-h-screen w-full max-w-7xl bg-white/55 shadow-sm backdrop-blur-sm">
+          {activeTab === 'couple' && <CoupleTherapy />}
+          {activeTab === 'parenting' && <ParentingGuidance />}
+          {activeTab === 'about' && <AboutUs />}
+          {activeTab === 'contact' && <ContactUs />}
+        </div>
+      )}
 
     </div>
   );
