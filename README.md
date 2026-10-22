@@ -5,7 +5,7 @@ This template provides a minimal setup to get React working in Vite with HMR and
 ## Contact form
 
 The contact form sends submissions through Formspree. Create a form in your
-Formspree account, then set its form ID in a local `.env` file:
+Formspree account, then set its form ID in a local `.env.local` file:
 
 ```text
 VITE_FORMSPREE_FORM_ID=your_form_id
