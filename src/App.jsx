@@ -193,7 +193,11 @@ export default function App() {
           {/* תוכן ה-Hero */}
           <div className="relative z-10 max-w-3xl mx-auto space-y-6 text-slate-800">
             <h1 className="text-4xl md:text-6xl font-extrabold leading-tight drop-shadow-sm text-[#1E293B]">
-              שני מטפלים. זוג אחד. מרחב שלם של מקום, הבנה ושינוי עמוק.
+              שני מטפלים. זוג אחד.
+              <br />
+              מרחב שלם של מקום,
+              <br />
+              הבנה ושינוי עמוק.
             </h1>
             <p className="mx-auto max-w-2xl text-lg font-bold text-slate-950 drop-shadow-[0_2px_3px_rgba(255,255,255,0.95)] md:text-2xl">
               מודל טיפולי ייחודי המשלב עבודה פרטנית במקביל לצד פגישות זוגיות משותפות – בנעימות, בדיסקרטיות, ובסינרגיה מלאה.
