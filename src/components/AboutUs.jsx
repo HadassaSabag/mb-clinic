@@ -122,13 +122,9 @@ const profiles = [
   },
 ];
 
-function ProfileColumn({ profile, isFirst }) {
+function ProfileColumn({ profile }) {
   return (
-    <article
-      className={`min-w-0 ${
-        isFirst ? 'md:border-l md:border-rose-200 md:pl-8' : 'md:pr-8'
-      }`}
-    >
+    <article className="min-w-0">
       <header className="mb-8">
         <h1 className="text-2xl font-extrabold leading-tight text-slate-900 sm:text-3xl">
           {profile.headline}
@@ -188,17 +184,15 @@ function ProfileColumn({ profile, isFirst }) {
   );
 }
 
-export default function AboutUs() {
+export default function AboutUs({ profileName }) {
   return (
     <main className="min-h-screen px-5 pb-20 pt-6 sm:px-8 sm:pt-8">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 md:grid-cols-2 md:gap-0">
-        {profiles.map((profile, index) => (
-          <ProfileColumn
-            key={profile.name}
-            profile={profile}
-            isFirst={index === 0}
-          />
-        ))}
+      <div className="mx-auto grid max-w-4xl grid-cols-1">
+        {profiles
+          .filter((profile) => profile.name === profileName)
+          .map((profile) => (
+            <ProfileColumn key={profile.name} profile={profile} />
+          ))}
       </div>
     </main>
   );

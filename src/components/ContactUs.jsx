@@ -1,41 +1,53 @@
+import { useState } from 'react';
+
 const emails = [
-  { label: 'מיכל', address: 'michallevy0@gmail.com' },
+  { label: 'מיכל', address: 'michal.levy0@gmail.com' },
   { label: 'בצלאל', address: 'betsalel21@gmail.com' },
   { label: 'הקליניקה', address: 'mbclinic.nlp@gmail.com' },
 ];
 
-const phones = [
-  { label: 'מיכל', number: '0545456783' },
-  { label: 'בצלאל', number: '0546720789' },
-];
+const phones = [{ label: 'הקליניקה', number: '0506961221' }];
 
 const fieldClassName =
   'mt-2 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-lg text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-pink-500 focus:ring-2 focus:ring-pink-100';
 
 function ContactForm() {
-  function handleSubmit(event) {
+  const [submissionStatus, setSubmissionStatus] = useState('idle');
+
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
-    const name = formData.get('name');
-    const phone = formData.get('phone');
-    const email = formData.get('email');
-    const message = formData.get('message');
-    const subject = `פנייה חדשה מהאתר - ${name}`;
-    const body = [
-      `שם: ${name}`,
-      `טלפון: ${phone}`,
-      `אימייל: ${email || 'לא צוין'}`,
-      '',
-      'תוכן הפנייה:',
-      message,
-    ].join('\n');
+    const formId = import.meta.env.VITE_FORMSPREE_FORM_ID;
+    if (!formId) {
+      setSubmissionStatus('not-configured');
+      return;
+    }
 
-    window.location.href = `mailto:mbclinic.nlp@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    setSubmissionStatus('sending');
+
+    try {
+      const response = await fetch(`https://formspree.io/f/${encodeURIComponent(formId)}`, {
+        method: 'POST',
+        body: formData,
+        headers: { Accept: 'application/json' },
+      });
+
+      if (!response.ok) {
+        setSubmissionStatus('error');
+        return;
+      }
+
+      form.reset();
+      setSubmissionStatus('success');
+    } catch {
+      setSubmissionStatus('error');
+    }
   }
 
   return (
-    <form className="space-y-5" onSubmit={handleSubmit}>
+    <form className="space-y-5 rounded-2xl border border-rose-100 bg-white/90 p-5 shadow-lg shadow-rose-900/5 sm:p-8" onSubmit={handleSubmit}>
       <div>
         <label className="font-semibold text-slate-800" htmlFor="contact-name">
           שם מלא
@@ -95,15 +107,27 @@ function ContactForm() {
       </div>
 
       <button
-        className="rounded-full bg-gradient-to-r from-pink-600 to-purple-700 px-8 py-3 font-bold text-white shadow-md transition hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-700"
+        className="inline-flex min-w-40 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-pink-600 to-purple-700 px-8 py-3 font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-700 disabled:cursor-wait disabled:opacity-70"
+        disabled={submissionStatus === 'sending'}
         type="submit"
       >
-        שליחת פנייה
+        {submissionStatus === 'sending' ? 'שולח…' : 'שליחת פנייה'}
       </button>
-      <p className="text-sm leading-6 text-slate-500">
-        בלחיצה תיפתח תוכנת הדואר שלך עם פרטי הפנייה, מוכנים לשליחה לכתובת
-        הקליניקה.
-      </p>
+      {submissionStatus === 'success' && (
+        <p aria-live="polite" className="rounded-xl bg-emerald-50 px-4 py-3 font-semibold text-emerald-800">
+          תודה, הפנייה נשלחה בהצלחה. נחזור אליכם בהקדם.
+        </p>
+      )}
+      {submissionStatus === 'not-configured' && (
+        <p aria-live="assertive" className="rounded-xl bg-amber-50 px-4 py-3 font-semibold text-amber-900">
+          טופס הפנייה עדיין לא הוגדר. אפשר ליצור קשר בטלפון או באימייל שמופיעים כאן.
+        </p>
+      )}
+      {submissionStatus === 'error' && (
+        <p aria-live="assertive" className="rounded-xl bg-rose-50 px-4 py-3 font-semibold text-rose-800">
+          לא הצלחנו לשלוח את הפנייה. נסו שוב או צרו קשר בטלפון או באימייל.
+        </p>
+      )}
     </form>
   );
 }
@@ -144,7 +168,7 @@ export default function ContactUs() {
             </h2>
 
             <section className="mb-8">
-              <h3 className="mb-3 text-xl font-bold text-slate-800">טלפונים</h3>
+              <h3 className="mb-3 text-xl font-bold text-slate-800">טלפון</h3>
               <ul className="space-y-3 text-lg text-slate-700">
                 {phones.map(({ label, number }) => (
                   <li key={label}>

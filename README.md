@@ -2,6 +2,19 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+## Contact form
+
+The contact form sends submissions through Formspree. Create a form in your
+Formspree account, then set its form ID in a local `.env` file:
+
+```text
+VITE_FORMSPREE_FORM_ID=your_form_id
+```
+
+Restart the Vite development server after changing the environment file. For
+production, configure the same variable in the hosting provider's build
+environment and rebuild the site.
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
