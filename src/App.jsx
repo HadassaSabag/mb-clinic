@@ -184,14 +184,14 @@ export default function App() {
       {/* תצוגת דף הבית (Hero) */}
       {activeTab === 'home' && (
         <section 
-          className="relative flex min-h-screen w-full items-center justify-center px-4 pb-12 pt-56 text-center bg-cover bg-center bg-no-repeat sm:pt-60" 
+          className="relative flex min-h-screen w-full flex-col items-center px-4 pb-3 pt-56 text-center bg-cover bg-center bg-no-repeat sm:pt-60" 
           style={{ backgroundImage: `url('/clinic-bg.jpg')` }}
         >
           {/* שכבת הצללה דקיקה לשמירה על חדות וקריאות */}
           <div className="absolute inset-0 bg-white/25"></div>
 
           {/* תוכן ה-Hero */}
-          <div className="relative z-10 max-w-3xl mx-auto space-y-6 text-slate-800">
+          <div className="relative z-10 my-auto max-w-3xl space-y-6 text-slate-800">
             <h1 className="text-4xl md:text-6xl font-extrabold leading-tight drop-shadow-sm text-[#1E293B]">
               שני מטפלים. זוג אחד.
               <br />
@@ -217,6 +217,12 @@ export default function App() {
               </button>
             </div>
           </div>
+          <footer className="relative z-10 w-full pt-6 text-left text-base font-bold text-slate-900 drop-shadow-[0_1px_2px_rgba(255,255,255,0.95)]">
+            © הדסה סבג ·{' '}
+            <a className="underline underline-offset-2 hover:text-pink-700" href="tel:0545220442" dir="ltr">
+              054-522-0442
+            </a>
+          </footer>
         </section>
       )}
 
