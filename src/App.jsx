@@ -218,7 +218,7 @@ export default function App() {
             </div>
           </div>
           <footer className="relative z-10 w-full pt-6 text-left text-base font-bold text-slate-900 drop-shadow-[0_1px_2px_rgba(255,255,255,0.95)]">
-            © הדסה עיצוב אתרים ·{' '}
+            © הדסה עיצוב ובניית אתרים ·{' '}
             <a className="hover:text-pink-700" href="tel:0545220442" dir="ltr">
               054-522-0442
             </a>
